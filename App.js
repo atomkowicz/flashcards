@@ -6,16 +6,21 @@ import AddDeck from './components/AddDeck';
 import Quiz from './components/Quiz';
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import { Constants } from 'expo';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import reducer from './reducers';
 
 export default class App extends Component {
   render() {
     return (
-      <View style={{ flex: 1 }}>
-        <View style={{ height: Constants.statusBarHeight }}>
-          <StatusBar barStyle="light-content" style={{ marginTop: 30 }} />
+      <Provider store={createStore(reducer)}>
+        <View style={{ flex: 1 }}>
+          <View style={{ height: Constants.statusBarHeight }}>
+            <StatusBar barStyle="light-content" style={{ marginTop: 30 }} />
+          </View>
+          <MainNavigator />
         </View>
-        <MainNavigator />
-      </View>
+      </Provider>
     );
   }
 }
@@ -53,7 +58,7 @@ const Tabs = TabNavigator({
 
 const MainNavigator = StackNavigator({
   Main: { screen: Tabs },
-  AddDeck: { screen: AddDeck },
+  Quiz: { screen: Quiz },
 })
 
 const styles = StyleSheet.create({

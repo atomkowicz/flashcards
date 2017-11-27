@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text, FlatList, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, Text, FlatList, StyleSheet, ActivityIndicator, TouchableOpacity } from 'react-native';
 import { fetchDecks } from '../utils/api';
 import Deck from './Deck';
+import Quiz from './Quiz';
 import { purple, gray, white } from '../utils/colors';
 
 
@@ -22,14 +23,18 @@ class DeckList extends Component {
     }
 
     renderItem = ({ item }) => {
-        return <Deck {...item} />
+        return (
+            <TouchableOpacity onPress={()=>this.props.navigation.navigate('Quiz')} >
+                <Deck {...item} />
+            </TouchableOpacity>
+        )
     }
 
     render() {
         const { decks, ready } = this.state;
 
         if (this.state.ready === false) {
-            return <ActivityIndicator size={'large'} style={ styles.container} />
+            return <ActivityIndicator size={'large'} style={styles.container} />
         }
         return (
             <View>
