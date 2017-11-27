@@ -10,7 +10,7 @@ class Deck extends Component {
             <View>
                 <View style={styles.deck}>
                     <Text style={styles.text}>{title.toUpperCase()}</Text>
-                    <Text>{questions.length} -Card(s)</Text>
+                    <Text>{questions.length} -Cardsss(s)</Text>
                 </View>
             </View>
         )

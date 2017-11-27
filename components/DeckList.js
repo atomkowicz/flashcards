@@ -1,17 +1,23 @@
 import React, { Component } from 'react';
-import { View, Text, FlatList } from 'react-native';
+import { View, Text, FlatList, StyleSheet, ActivityIndicator } from 'react-native';
 import { fetchDecks } from '../utils/api';
 import Deck from './Deck';
+import { purple, gray, white } from '../utils/colors';
+
 
 class DeckList extends Component {
     state = {
-        decks: null
+        decks: null,
+        ready: false
     }
 
     componentDidMount() {
         fetchDecks().then(res => {
             const decks = Object.keys(res).map(key => (res[key]));
-            this.setState({ decks: decks });
+            this.setState({
+                decks: decks,
+                ready: true
+            });
         });
     }
 
@@ -20,7 +26,11 @@ class DeckList extends Component {
     }
 
     render() {
-        const { decks } = this.state;
+        const { decks, ready } = this.state;
+
+        if (this.state.ready === false) {
+            return <ActivityIndicator size={'large'} style={ styles.container} />
+        }
         return (
             <View>
                 {decks && <FlatList
@@ -35,3 +45,10 @@ class DeckList extends Component {
 
 export default DeckList;
 
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+});
