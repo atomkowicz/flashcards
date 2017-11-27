@@ -26,8 +26,6 @@ const decksDummyData = {
   }
 
   export function getDecks (results) {
-
-    console.log(JSON.parse(results))
     return results === null
       ? decksDummyData
       : JSON.parse(results)

@@ -1,13 +1,12 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import { View, Text } from 'react-native'
 
 class Deck extends Component {
     render() {
-        console.log(this.props);
-        
+        const { title } = this.props
         return (
             <View>
-                <Text>Deck</Text>
+                <Text>Deck: {title}</Text>
             </View>
         )
     }

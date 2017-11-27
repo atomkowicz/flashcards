@@ -10,20 +10,25 @@ class DeckList extends Component {
 
     componentDidMount() {
         fetchDecks().then(res => {
-            this.setState({ decks: Object.keys(res) })
+            const decks = Object.keys(res).map(key => (res[key]));
+            this.setState({ decks: decks });
         });
     }
 
+    renderItem = ({ item }) => {
+        return <Deck {...item}/>
+    }
 
 
     render() {
+        const {decks} = this.state;
         return (
             <View>
-                {this.state.decks &&
-                    this.state.decks.map(deck =>
-                        <Text key={deck}>Decklist: {deck}</Text>
-                    )}
-
+                {decks && <FlatList
+                    data={decks}
+                    renderItem={this.renderItem}
+                    keyExtractor={(item, index) => index}
+                />}
             </View>
         )
     }
