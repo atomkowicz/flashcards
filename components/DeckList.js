@@ -16,12 +16,11 @@ class DeckList extends Component {
     }
 
     renderItem = ({ item }) => {
-        return <Deck {...item}/>
+        return <Deck {...item} />
     }
 
-
     render() {
-        const {decks} = this.state;
+        const { decks } = this.state;
         return (
             <View>
                 {decks && <FlatList
