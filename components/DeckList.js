@@ -5,7 +5,6 @@ import Deck from './Deck';
 import Quiz from './Quiz';
 import { purple, gray, white } from '../utils/colors';
 
-
 class DeckList extends Component {
     state = {
         decks: null,
@@ -13,12 +12,14 @@ class DeckList extends Component {
     }
 
     componentDidMount() {
-        fetchDecks().then(res => {
-            const decks = Object.keys(res).map(key => (res[key]));
-            this.setState({
-                decks: decks,
-                ready: true
-            });
+        fetchDecks().then(result => {
+            if (result) {
+                const decks = Object.keys(result).map(key => (result[key]));   
+                this.setState({
+                    decks,
+                    ready: true
+                });
+            }
         });
     }
 
@@ -33,16 +34,21 @@ class DeckList extends Component {
     render() {
         const { decks, ready } = this.state;
 
+        if(decks) console.log(decks);
+       
         if (this.state.ready === false) {
             return <ActivityIndicator size={'large'} style={styles.container} />
         }
         return (
             <View>
+                <View>
+                <Text> {JSON.stringify(decks)}</Text>
                 {decks && <FlatList
                     data={decks}
                     renderItem={this.renderItem}
                     keyExtractor={(item, index) => index}
                 />}
+            </View>
             </View>
         )
     }

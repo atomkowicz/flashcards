@@ -1,22 +1,39 @@
 import React, { Component } from 'react'
-import { View, Text, TextInput, TouchableOpacity,StyleSheet } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native'
 import { purple, gray, white } from '../utils/colors';
+import { saveDeckTitle } from '../utils/api'
 
 class AddDeck extends Component {
-    constructor(props) {
-        super(props);
-        this.state = { text: '' };
+    state = {
+        deckTitle: '',
     }
+
+    submit = () => {
+        const title = this.state.deckTitle;
+        const deck = {
+            [title]: {
+                "title": title,
+                "questions": []
+            }
+        }
+        saveDeckTitle({ deck })
+    }
+
+    // toHome = () => {
+    //     this.props.navigation.dispatch(NavigationActions.back({ key: 'AddEntry' }))
+    // }
+
     render() {
         return (
             <View>
-                <Text>Type deck name below</Text>
+                <Text>Type deck  below</Text>
                 <TextInput
                     style={{ height: 40 }}
-                    onChangeText={(text) => this.setState({ text })}
-                    value={this.state.text}
+                    onChangeText={(text) => this.setState({ deckTitle: text })}
+                    defaultValue={this.state.text}
                 />
                 <TouchableOpacity
+                    onPress={this.submit}
                     style={styles.submitBtn}>
                     <Text style={styles.submitBtnText}>SUBMIT </Text>
                 </TouchableOpacity>
