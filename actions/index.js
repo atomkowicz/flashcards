@@ -15,20 +15,14 @@ export function getDecks() {
             }))
     }
 }
-export function getDeck(deck) {
-    return {
-        type: GET_DECK,
-        deck
-    }
-}
 
-export function saveDeckTitle(deck) {
+export function saveDeckTitle(deckTitle) {
     return (dispatch) => {
         API
-            .saveDeckTitle(deck)
+            .saveDeckTitle(deckTitle)
             .then(() => dispatch({
                 type: SAVE_DECK_TITLE,
-                decks: deck
+                deckTitle
             }))
     }
 }

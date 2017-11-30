@@ -8,8 +8,23 @@ export function fetchDecks() {
         .then(result => JSON.parse(result))
 }
 
-export function saveDeckTitle({ deck }) {
-    return AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify(deck))
+export function saveDeckTitle(deckTitle) {
+    const deck = {
+        [deckTitle]: {
+            "id": deckTitle,
+            "title": deckTitle,
+            "questions": []
+        }
+    }
+    return AsyncStorage.mergeItem(
+        DECKS_STORAGE_KEY, JSON.stringify({
+            [deckTitle]: {
+                "id": deckTitle,
+                "title": deckTitle,
+                "questions": []
+            }
+        })
+    )
 }
 
 export function clearDecks() {

@@ -19,7 +19,7 @@ class AddDeck extends Component {
             }
         }
 
-        this.props.saveDeck({deck})
+        this.props.saveDeck(title)
         this.props.navigation.dispatch(NavigationActions.back({ key: 'AddDeck' }))
 
     }

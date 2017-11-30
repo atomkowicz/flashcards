@@ -7,18 +7,20 @@ import {
 
 function decks(state = {}, action) {
 
-    const { decks } = action;
+    const { decks, deckTitle, deckId } = action;
     switch (action.type) {
         case GET_DECKS:
             return {
                 ...decks
             };
-        case GET_DECK:
-            return state;
         case SAVE_DECK_TITLE:
             return {
                 ...state,
-                ...decks.deck
+                [deckTitle]: {
+                    "id": deckTitle,
+                    "title": deckTitle,
+                    "questions": []
+                }
             };
         default:
             return state;
