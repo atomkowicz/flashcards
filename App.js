@@ -7,13 +7,12 @@ import Quiz from './components/Quiz';
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import { Constants } from 'expo';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import reducer from './reducers';
+import store from './store';
 
 export default class App extends Component {
   render() {
     return (
-      <Provider store={createStore(reducer)}>
+      <Provider store={store}>
         <View style={{ flex: 1 }}>
           <View style={{ height: Constants.statusBarHeight }}>
             <StatusBar barStyle="light-content" style={{ marginTop: 30 }} />

@@ -1,11 +1,13 @@
-import React, { Component } from 'react'
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native'
+import React, { Component } from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { purple, gray, white } from '../utils/colors';
-import { saveDeckTitle } from '../utils/api'
+import { saveDeckTitle } from '../actions';
+import { NavigationActions } from 'react-navigation';
+import { connect } from 'react-redux';
 
 class AddDeck extends Component {
     state = {
-        deckTitle: '',
+        deckTitle: 'JavaScript',
     }
 
     submit = () => {
@@ -16,21 +18,20 @@ class AddDeck extends Component {
                 "questions": []
             }
         }
-        saveDeckTitle({ deck })
-    }
 
-    // toHome = () => {
-    //     this.props.navigation.dispatch(NavigationActions.back({ key: 'AddEntry' }))
-    // }
+        this.props.saveDeck({deck})
+        this.props.navigation.dispatch(NavigationActions.back({ key: 'AddDeck' }))
+
+    }
 
     render() {
         return (
             <View>
-                <Text>Type deck  below</Text>
+                <Text>Type deck title</Text>
                 <TextInput
                     style={{ height: 40 }}
                     onChangeText={(text) => this.setState({ deckTitle: text })}
-                    defaultValue={this.state.text}
+                    defaultValue={this.state.deckTitle}
                 />
                 <TouchableOpacity
                     onPress={this.submit}
@@ -42,7 +43,16 @@ class AddDeck extends Component {
     }
 }
 
-export default AddDeck;
+function mapStateToProps(decks) {
+    return decks
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        saveDeck: (deck) => dispatch(saveDeckTitle(deck))
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(AddDeck);
 
 const styles = StyleSheet.create({
     input: {

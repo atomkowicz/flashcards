@@ -4,57 +4,66 @@ import { fetchDecks } from '../utils/api';
 import Deck from './Deck';
 import Quiz from './Quiz';
 import { purple, gray, white } from '../utils/colors';
+import { connect } from 'react-redux';
+import { getDecks } from '../actions'
 
 class DeckList extends Component {
     state = {
-        decks: null,
         ready: false
     }
 
     componentDidMount() {
-        fetchDecks().then(result => {
-            if (result) {
-                const decks = Object.keys(result).map(key => (result[key]));   
-                this.setState({
-                    decks,
-                    ready: true
-                });
-            }
-        });
+        this.props.getDecks();
+        this.setState({ ready: true });
     }
 
     renderItem = ({ item }) => {
         return (
-            <TouchableOpacity onPress={()=>this.props.navigation.navigate('Quiz')} >
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('Quiz')} >
                 <Deck {...item} />
             </TouchableOpacity>
         )
     }
 
     render() {
-        const { decks, ready } = this.state;
+        const { ready } = this.state;
+        const { decks } = this.props;
 
-        if(decks) console.log(decks);
-       
+        let decksList = [];
+
+        if (decks) {
+            decksList = Object.keys(decks).map(key => decks[key]);
+        }
+  
         if (this.state.ready === false) {
             return <ActivityIndicator size={'large'} style={styles.container} />
         }
         return (
             <View>
-                <View>
-                <Text> {JSON.stringify(decks)}</Text>
-                {decks && <FlatList
-                    data={decks}
+                <Text> {JSON.stringify(decksList)} </Text>
+                {decksList && <FlatList
+                    data={decksList}
                     renderItem={this.renderItem}
                     keyExtractor={(item, index) => index}
                 />}
-            </View>
             </View>
         )
     }
 }
 
-export default DeckList;
+function mapStateToProps(state) {
+    return {
+        decks: state
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        getDecks: () => dispatch(getDecks())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(DeckList);
 
 const styles = StyleSheet.create({
     container: {
