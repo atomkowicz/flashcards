@@ -4,6 +4,7 @@ import { StackNavigator, TabNavigator } from 'react-navigation';
 import DeckList from './components/DeckList';
 import AddDeck from './components/AddDeck';
 import Quiz from './components/Quiz';
+import AddCard from './components/AddCard';
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import { Constants } from 'expo';
 import { Provider } from 'react-redux';
@@ -17,7 +18,7 @@ export default class App extends Component {
           <View style={{ height: Constants.statusBarHeight }}>
             <StatusBar barStyle="light-content" style={{ marginTop: 30 }} />
           </View>
-          <MainNavigator style={{ flex: 1 }} />
+          <MainNavigator />
         </View>
       </Provider>
     );
@@ -58,6 +59,7 @@ const Tabs = TabNavigator({
 const MainNavigator = StackNavigator({
   Main: { screen: Tabs },
   Quiz: { screen: Quiz },
+  AddCard: { screen: AddCard },
 })
 
 const styles = StyleSheet.create({

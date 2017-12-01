@@ -19,8 +19,11 @@ class DeckList extends Component {
     }
 
     renderItem = ({ item }) => {
+        const { navigation } = this.props;
         return (
-            <TouchableOpacity style={{ height: 150 }} onPress={() => this.props.navigation.navigate('Quiz')} >
+            <TouchableOpacity
+                style={{ height: 150 }}
+                onPress={() => navigation.navigate('Quiz', { ...item })} >
                 <Deck {...item} />
             </TouchableOpacity>
         )
