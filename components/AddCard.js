@@ -11,11 +11,19 @@ class AddCard extends Component {
 
     submit = () => {
         const card = this.state;
-        const { id, deck: { questions } } = this.props;
+        const { id, deck, deck: { questions, title } } = this.props;
 
-        const allQuestions = [...questions, card];
+        const updatedDeck = {
+            [title]: {
+                ...deck,
+                ["questions"]: [...questions, card]
+            }
+        }
 
-        this.props.addCardToDeck(card, id, allQuestions)
+        console.log("updatedDeck?????????????????????????")
+        console.log(updatedDeck)
+
+        this.props.addCardToDeck(card, id, updatedDeck)
         this.props.navigation.navigate('Main')
     }
     render() {

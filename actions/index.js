@@ -27,10 +27,10 @@ export function saveDeckTitle(deckTitle) {
             }))
     }
 }
-export function addCardToDeck(card, deckId, allQuestions) {
+export function addCardToDeck(card, deckId, deck) {
     return (dispatch) => {
         API
-            .addCardToDeck(deckId, allQuestions)
+            .addCardToDeck(deck)
             .then(() => dispatch({
                 type: ADD_CARD_TO_DECK,
                 card,

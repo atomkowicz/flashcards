@@ -18,13 +18,11 @@ export function saveDeckTitle(deckTitle) {
     }))
 }
 
-export function addCardToDeck(deckTitle, allQuestions) {
+export function addCardToDeck(d) {
+    const { deck } = d;
+
+    console.log("deck?????????????????????????")
+    console.log(d)
     return AsyncStorage
-        .mergeItem(DECKS_STORAGE_KEY, JSON.stringify({
-            [deckTitle]: {
-                "id": deckTitle,
-                "title": deckTitle,
-                "questions": allQuestions
-            }
-        }))
+        .mergeItem(DECKS_STORAGE_KEY, JSON.stringify(d))
 }
