@@ -26,10 +26,11 @@ export function saveDeckTitle(deckTitle) {
             }))
     }
 }
-export function addCardToDeck(card, deck) {
+export function addCardToDeck(card, deckId) {
     return {
         type: ADD_CARD_TO_DECK,
-        deck
+        card,
+        deckId
     }
 }
 

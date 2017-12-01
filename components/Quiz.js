@@ -18,7 +18,7 @@ class Quiz extends Component {
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity
                         style={styles.button}
-                        onPress={() => navigation.navigate('AddCard')} >
+                        onPress={() => navigation.navigate('AddCard', { id })} >
                         <Text style={styles.buttonText}>
                             Add Card
                         </Text>
