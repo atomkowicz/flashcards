@@ -9,7 +9,7 @@ class Deck extends Component {
         return (
             <View>
                 <View style={styles.deck}>
-                    <Text style={styles.text}>{title && title.toUpperCase()}</Text>
+                    <Text style={styles.text}>{title && title.toUpperCase()} </Text>
                     <Text>{questions && questions.length} -Card(s)</Text>
                 </View>
             </View>
@@ -21,8 +21,7 @@ export default Deck;
 
 const styles = StyleSheet.create({
     deck: {
-        flex: 1,
-        marginTop: 12,
+        marginTop: 5,
         padding: 40,
         backgroundColor: white,
         shadowColor: 'rgba(0, 0, 0, 0.24)',

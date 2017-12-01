@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { View, Text, FlatList, StyleSheet, ActivityIndicator, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList, StyleSheet, ActivityIndicator, TouchableOpacity, AsyncStorage } from 'react-native';
 import { fetchDecks } from '../utils/api';
 import Deck from './Deck';
 import Quiz from './Quiz';
 import { purple, gray, white } from '../utils/colors';
 import { connect } from 'react-redux';
-import { getDecks } from '../actions'
+import { getDecks } from '../actions';
+import { DECKS_STORAGE_KEY } from '../utils/api';
 
 class DeckList extends Component {
     state = {
@@ -19,10 +20,16 @@ class DeckList extends Component {
 
     renderItem = ({ item }) => {
         return (
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('Quiz')} >
+            <TouchableOpacity style={{ height: 150 }} onPress={() => this.props.navigation.navigate('Quiz')} >
                 <Deck {...item} />
             </TouchableOpacity>
         )
+    }
+
+    clearDecks = () => {
+        AsyncStorage
+            .removeItem(DECKS_STORAGE_KEY)
+            .then(this.props.getDecks());
     }
 
     render() {
@@ -34,14 +41,18 @@ class DeckList extends Component {
         if (decks) {
             decksList = Object.keys(decks).map(key => decks[key]);
         }
-  
+
         if (this.state.ready === false) {
             return <ActivityIndicator size={'large'} style={styles.container} />
         }
+
         return (
             <View>
-                <Text> {JSON.stringify(decksList)} </Text>
+                <TouchableOpacity onPress={this.clearDecks} >
+                    <Text style={{ padding: 20 }}> clear </Text>
+                </TouchableOpacity>
                 {decksList && <FlatList
+
                     data={decksList}
                     renderItem={this.renderItem}
                     keyExtractor={(item, index) => index}
@@ -67,7 +78,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(DeckList);
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
     },

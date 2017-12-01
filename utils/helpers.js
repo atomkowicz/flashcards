@@ -25,6 +25,13 @@ const decksDummyData = {
     }
   }
 
+//   export function getDeck(deckId) {
+//     return {
+//         type: GET_DECK,
+//         deckId
+//     }
+// }
+
   export function getDecks (results) {
     return results === null
       ? decksDummyData

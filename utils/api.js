@@ -26,7 +26,3 @@ export function saveDeckTitle(deckTitle) {
         })
     )
 }
-
-export function clearDecks() {
-    AsyncStorage.removeItem(DECKS_STORAGE_KEY);
-}

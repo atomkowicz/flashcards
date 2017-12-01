@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 
 class AddDeck extends Component {
     state = {
-        deckTitle: 'JavaScript',
+        deckTitle: '',
     }
 
     submit = () => {
@@ -20,11 +20,24 @@ class AddDeck extends Component {
         }
 
         this.props.saveDeck(title)
+        this.setState({ deckTitle: this.getRandomTitle() })  
         this.props.navigation.dispatch(NavigationActions.back({ key: 'AddDeck' }))
+    }
 
+    getRandomTitle() {
+        const titles = ["VB", "C#", "Ruby", "Javascript", "React", "Java", "Scala", "SQL"];        
+        min = Math.ceil(0);
+        max = Math.floor(7);
+        const r = Math.floor(Math.random() * (max - min + 1)) + min;
+        return titles[r]
+    }
+
+    componentWillMount = () => {
+        this.setState({ deckTitle: this.getRandomTitle() })
     }
 
     render() {
+
         return (
             <View>
                 <Text>Type deck title</Text>

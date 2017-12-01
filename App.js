@@ -17,7 +17,7 @@ export default class App extends Component {
           <View style={{ height: Constants.statusBarHeight }}>
             <StatusBar barStyle="light-content" style={{ marginTop: 30 }} />
           </View>
-          <MainNavigator />
+          <MainNavigator style={{ flex: 1 }} />
         </View>
       </Provider>
     );
