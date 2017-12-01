@@ -11,6 +11,7 @@ class Deck extends Component {
                 <View style={styles.deck}>
                     <Text style={styles.text}>{title && title.toUpperCase()} </Text>
                     <Text>{questions && questions.length} - Card(s)</Text>
+                    <Text>{JSON.stringify(questions)}</Text>
                 </View>
             </View>
         )

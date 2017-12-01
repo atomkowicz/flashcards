@@ -3,6 +3,7 @@ export const GET_DECK = 'GET_DECK';
 export const SAVE_DECK_TITLE = 'SAVE_DECK_TITLE';
 export const ADD_CARD_TO_DECK = 'ADD_CARD_TO_DECK';
 import * as  API from '../utils/api';
+import { fetchDecks } from '../utils/api';
 
 
 export function getDecks() {
@@ -26,11 +27,15 @@ export function saveDeckTitle(deckTitle) {
             }))
     }
 }
-export function addCardToDeck(card, deckId) {
-    return {
-        type: ADD_CARD_TO_DECK,
-        card,
-        deckId
+export function addCardToDeck(card, deckId, allQuestions) {
+    return (dispatch) => {
+        API
+            .addCardToDeck(deckId, allQuestions)
+            .then(() => dispatch({
+                type: ADD_CARD_TO_DECK,
+                card,
+                deckId
+            }))
     }
 }
 

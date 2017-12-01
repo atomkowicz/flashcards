@@ -9,20 +9,22 @@ export function fetchDecks() {
 }
 
 export function saveDeckTitle(deckTitle) {
-    const deck = {
+    return AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify({
         [deckTitle]: {
             "id": deckTitle,
             "title": deckTitle,
             "questions": []
         }
-    }
-    return AsyncStorage.mergeItem(
-        DECKS_STORAGE_KEY, JSON.stringify({
+    }))
+}
+
+export function addCardToDeck(deckTitle, allQuestions) {
+    return AsyncStorage
+        .mergeItem(DECKS_STORAGE_KEY, JSON.stringify({
             [deckTitle]: {
                 "id": deckTitle,
                 "title": deckTitle,
-                "questions": []
+                "questions": allQuestions
             }
-        })
-    )
+        }))
 }

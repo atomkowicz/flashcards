@@ -10,12 +10,13 @@ class AddCard extends Component {
     }
 
     submit = () => {
-        console.log(this.state)
-        console.log(this.props.id)
-
         const card = this.state;
-        const { id } = this.props;
-        this.props.addCardToDeck(card, id)
+        const { id, deck: { questions } } = this.props;
+
+        const allQuestions = [...questions, card];
+
+        this.props.addCardToDeck(card, id, allQuestions)
+        this.props.navigation.navigate('Main')
     }
     render() {
         return (
@@ -37,7 +38,7 @@ class AddCard extends Component {
                     <TouchableOpacity
                         onPress={this.submit}
                         style={styles.submitBtn}>
-                        <Text style={styles.submitBtnText}>SUBMIT </Text>
+                        <Text style={styles.submitBtnText}>SUBMIT</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -46,13 +47,15 @@ class AddCard extends Component {
 }
 
 mapStateToProps = (state, props) => {
+    const { id } = props.navigation.state.params
     return {
-        id: props.navigation.state.params.id
+        id: props.navigation.state.params.id,
+        deck: state[id]
     }
 }
 mapDispatchToProps = (dispatch) => {
     return {
-        addCardToDeck: (card, deckId) => dispatch(addCardToDeck(card, deckId))
+        addCardToDeck: (card, deckId, deck) => dispatch(addCardToDeck(card, deckId, deck))
     }
 }
 
