@@ -1,26 +1,54 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import AddCard from './AddCard';
+import { connect } from 'react-redux'
 import { purple, gray, white } from '../utils/colors';
+
 
 class Deck extends Component {
     render() {
-        const { title, questions } = this.props;
+        const { id, title, navigation, questions } = this.props;
 
         return (
-            <View>
-                <View style={styles.deck}>
-                    <Text style={styles.text}>{title && title.toUpperCase()} </Text>
-                    <Text>{questions && questions.length} - Card(s)</Text>
-                    <Text>{JSON.stringify(questions)}</Text>
+            <View style={styles.container}>
+                <View>
+                    <View style={styles.deck}>
+                        <Text style={styles.text}>{title && title.toUpperCase()} </Text>
+                        <Text>{questions && questions.length} - Card(s)</Text>
+                    </View>
+                </View>
+                <Text>{JSON.stringify(questions)}</Text>
+
+                <View style={styles.buttonContainer}>
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={() => navigation.navigate('AddCard', { id })} >
+                        <Text style={styles.buttonText}>
+                            Add Card
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={() => navigation.navigate('Quiz')} >
+                        <Text style={styles.buttonText}>Start Quiz</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
         )
     }
 }
 
-export default Deck;
+mapStateToProps = (state, props) => ({
+    ...props.navigation.state.params,
+})
+
+export default connect(mapStateToProps)(Deck);
 
 const styles = StyleSheet.create({
+    conainer: {
+        flex: 1,
+        justifyContent: 'space-between'
+    },
     deck: {
         marginTop: 5,
         padding: 40,
@@ -33,5 +61,23 @@ const styles = StyleSheet.create({
     },
     text: {
         fontSize: 20
+    },
+    buttonContainer: {
+        margin: 10,
+        flex: 1,
+        flexDirection: 'row',
+    },
+    button: {
+        flex: 1,
+        padding: 20,
+        margin: 5,
+        height: 50,
+        backgroundColor: purple,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    buttonText: {
+        color: white
     }
+
 })

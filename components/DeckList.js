@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { View, Text, FlatList, StyleSheet, ActivityIndicator, TouchableOpacity, AsyncStorage } from 'react-native';
 import { fetchDecks } from '../utils/api';
-import Deck from './Deck';
+import DeckListItem from './DeckListItem';
 import Quiz from './Quiz';
+import Deck from './Deck';
 import { purple, gray, white } from '../utils/colors';
 import { connect } from 'react-redux';
 import { getDecks } from '../actions';
@@ -23,8 +24,8 @@ class DeckList extends Component {
         return (
             <TouchableOpacity
                 style={{ height: 150 }}
-                onPress={() => navigation.navigate('Quiz', { ...item })} >
-                <Deck {...item} />
+                onPress={() => navigation.navigate('Deck', { ...item })} >
+                <DeckListItem {...item} />
             </TouchableOpacity>
         )
     }

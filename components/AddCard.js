@@ -20,11 +20,8 @@ class AddCard extends Component {
             }
         }
 
-        console.log("updatedDeck?????????????????????????")
-        console.log(updatedDeck)
-
         this.props.addCardToDeck(card, id, updatedDeck)
-        this.props.navigation.navigate('Main')
+        this.props.navigation.navigate('Deck', { ...deck })
     }
     render() {
         return (

@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Easing, Animated, StatusBar } from 'react-nativ
 import { StackNavigator, TabNavigator } from 'react-navigation';
 import DeckList from './components/DeckList';
 import AddDeck from './components/AddDeck';
+import Deck from './components/Deck';
 import Quiz from './components/Quiz';
 import AddCard from './components/AddCard';
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
@@ -58,6 +59,7 @@ const Tabs = TabNavigator({
 
 const MainNavigator = StackNavigator({
   Main: { screen: Tabs },
+  Deck: { screen: Deck },
   Quiz: { screen: Quiz },
   AddCard: { screen: AddCard },
 })

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import Deck from './Deck';
 import AddCard from './AddCard';
 import { connect } from 'react-redux'
 import { purple, gray, white } from '../utils/colors';
@@ -8,13 +7,17 @@ import { purple, gray, white } from '../utils/colors';
 
 class Quiz extends Component {
     render() {
-        const deck = this.props;
-        const { id, title, navigation } = this.props;
+        const { id, title, navigation, questions } = this.props;
 
         return (
             <View style={styles.container}>
-                <Deck {...deck}
-                    style={styles.deck} />
+                <View>
+                    <View style={styles.deck}>
+                        <Text style={styles.text}>Quiz view </Text>
+                    </View>
+                </View>
+                <Text>{JSON.stringify(questions)}</Text>
+
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity
                         style={styles.button}
@@ -46,8 +49,17 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between'
     },
     deck: {
-        flexGrow: 2,
-        flex: 3,
+        marginTop: 5,
+        padding: 40,
+        backgroundColor: white,
+        shadowColor: 'rgba(0, 0, 0, 0.24)',
+        shadowOffset: {
+            width: 0,
+            height: 3
+        },
+    },
+    text: {
+        fontSize: 20
     },
     buttonContainer: {
         margin: 10,
