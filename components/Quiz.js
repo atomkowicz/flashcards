@@ -6,30 +6,48 @@ import { purple, gray, white } from '../utils/colors';
 
 
 class Quiz extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            question: this.props.questions[0].question,
+            score: 0
+        }
+    }
+
+    scoreUp = () => {
+        this.setState((prevState) => (
+            { score: prevState.score + 1 }
+        ))
+
+    }
+    scoreDown = () => {
+        this.setState((prevState) => ({score: prevState.score - 1 }
+        ))
+    }
+
     render() {
-        const { id, title, navigation, questions } = this.props;
+        const { questions } = this.props;
 
         return (
             <View style={styles.container}>
                 <View>
                     <View style={styles.deck}>
-                        <Text style={styles.text}>Quiz view </Text>
+                        <Text style={styles.text}>{this.state.question}</Text>
                     </View>
                 </View>
-                <Text>{JSON.stringify(questions)}</Text>
+                <Text>{this.state.score}</Text>
 
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity
                         style={styles.button}
-                        onPress={() => navigation.navigate('AddCard', { id })} >
-                        <Text style={styles.buttonText}>
-                            Add Card
-                        </Text>
+                        onPress={() => { this.scoreDown() }} >
+                        <Text style={styles.buttonText}>Incorrect</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.button}
-                        onPress={() => navigation.navigate('Quiz')} >
-                        <Text style={styles.buttonText}>Start Quiz</Text>
+                        onPress={() => { this.scoreUp() }} >
+                        <Text style={styles.buttonText}>Correct</Text>
                     </TouchableOpacity>
                 </View>
             </View>

@@ -6,6 +6,7 @@ import { purple, gray, white } from '../utils/colors';
 
 
 class Deck extends Component {
+
     render() {
         const { id, title, navigation, questions } = this.props;
 
@@ -28,8 +29,9 @@ class Deck extends Component {
                         </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        style={styles.button}
-                        onPress={() => navigation.navigate('Quiz')} >
+                        disabled={!questions.length}
+                        style={[styles.button, !questions.length? styles.inactive: ""]}
+                        onPress={() => navigation.navigate('Quiz', { questions })} >
                         <Text style={styles.buttonText}>Start Quiz</Text>
                     </TouchableOpacity>
                 </View>
@@ -75,6 +77,9 @@ const styles = StyleSheet.create({
         backgroundColor: purple,
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    inactive: {
+        opacity: 0.4
     },
     buttonText: {
         color: white
