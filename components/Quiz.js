@@ -11,45 +11,108 @@ class Quiz extends Component {
         super(props);
         this.state = {
             question: this.props.questions[0].question,
-            score: 0
+            answer: this.props.questions[0].answer,
+            showAnswer: false,
+            score: 0,
+            questionNum: 0,
+            quizEnds: false
         }
     }
 
-    scoreUp = () => {
-        this.setState((prevState) => (
-            { score: prevState.score + 1 }
-        ))
+    submitAnswer = (score) => {
+        const { questions } = this.props;
+
+        this.setState((prevState) => {
+            const questionNum =
+                (prevState.questionNum < questions.length - 1)
+                    ? prevState.questionNum + 1
+                    : prevState.questionNum;
+
+            return (
+                {
+                    score: prevState.score + score,
+                    questionNum: questionNum,
+                    question: questions[questionNum].question,
+                    answer: questions[questionNum].answer,
+                    showAnswer: false,
+                    quizEnds: prevState.questionNum === questions.length - 1
+                }
+            )
+        })
 
     }
-    scoreDown = () => {
-        this.setState((prevState) => ({score: prevState.score - 1 }
-        ))
+
+    showAnswer = () => {
+        this.setState({
+            showAnswer: true
+        })
+    }
+
+    resetQuiz = () => {
+        this.setState({
+            question: this.props.questions[0].question,
+            answer: this.props.questions[0].answer,
+            showAnswer: false,
+            score: 0,
+            questionNum: 0,
+            quizEnds: false
+        })
     }
 
     render() {
-        const { questions } = this.props;
+        const { questions, id, navigation } = this.props;
+        const { questionNum, quizEnds } = this.state;
+        const scorePerc = Math.ceil(this.state.score / questions.length * 100);
 
         return (
-            <View style={styles.container}>
-                <View>
-                    <View style={styles.deck}>
-                        <Text style={styles.text}>{this.state.question}</Text>
-                    </View>
-                </View>
-                <Text>{this.state.score}</Text>
+            <View style={{ flex: 1 }}>
+                {!quizEnds &&
+                    <View style={{ flex: 2, justifyContent: 'center', alignItems: 'center' }}>
+                        <Text style={styles.text}>
+                            {this.state.question}
+                        </Text>
+                        <Text style={{ fontSize: 14, marginTop: 20, color: purple }}>
+                            {questions.length - questionNum - 1} question(s) left</Text>
+                        <TouchableOpacity
+                            onPress={() => { this.showAnswer() }} >
+                            <Text style={{ fontSize: 20, marginTop: 20, color: purple }}>
+                                {this.state.showAnswer ? this.state.answer : "See the answer"}
+                            </Text>
+                        </TouchableOpacity>
+                    </View>}
+                {!quizEnds &&
+                    <View style={styles.buttonContainer}>
+                        <TouchableOpacity
+                            style={styles.button}
+                            onPress={() => { this.submitAnswer(0) }} >
+                            <Text style={styles.buttonText}>Incorrect</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.button}
+                            onPress={() => { this.submitAnswer(1) }} >
+                            <Text style={styles.buttonText}>Correct</Text>
+                        </TouchableOpacity>
+                    </View>}
 
-                <View style={styles.buttonContainer}>
-                    <TouchableOpacity
-                        style={styles.button}
-                        onPress={() => { this.scoreDown() }} >
-                        <Text style={styles.buttonText}>Incorrect</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={styles.button}
-                        onPress={() => { this.scoreUp() }} >
-                        <Text style={styles.buttonText}>Correct</Text>
-                    </TouchableOpacity>
-                </View>
+                {quizEnds &&
+                    <View style={{ flex: 1}}>
+                        <View style={{ flex: 2, justifyContent: 'center', alignItems: 'center' }}>
+                            <Text style={styles.text}>
+                                Your score: {this.state.score} / {questions.length} - {scorePerc}%</Text>
+                        </View>
+                        <View style={styles.buttonContainer}>
+                            <TouchableOpacity
+                                style={styles.button}
+                                onPress={() => navigation.navigate('Deck', { id })}>
+                                <Text style={styles.buttonText}>Go back to deck</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={styles.button}
+                                onPress={() => { this.resetQuiz() }} >
+                                <Text style={styles.buttonText}>Start again</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>}
             </View>
         )
     }
@@ -67,6 +130,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between'
     },
     deck: {
+        flex: 1,
         marginTop: 5,
         padding: 40,
         backgroundColor: white,
@@ -77,12 +141,12 @@ const styles = StyleSheet.create({
         },
     },
     text: {
-        fontSize: 20
+        fontSize: 25,
+        marginTop: 20,
     },
     buttonContainer: {
         margin: 10,
         flex: 1,
-        flexDirection: 'row',
     },
     button: {
         flex: 1,

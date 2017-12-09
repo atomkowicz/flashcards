@@ -20,12 +20,12 @@ class AddDeck extends Component {
         }
 
         this.props.saveDeck(title)
-        this.setState({ deckTitle: this.getRandomTitle() })  
+        this.setState({ deckTitle: this.getRandomTitle() })
         this.props.navigation.dispatch(NavigationActions.back({ key: 'AddDeck' }))
     }
 
     getRandomTitle() {
-        const titles = ["VB", "C#", "Ruby", "Javascript", "React", "Java", "Scala", "SQL"];        
+        const titles = ["VB", "C#", "Ruby", "Javascript", "React", "Java", "Scala", "SQL"];
         min = Math.ceil(0);
         max = Math.floor(7);
         const r = Math.floor(Math.random() * (max - min + 1)) + min;
@@ -39,18 +39,22 @@ class AddDeck extends Component {
     render() {
 
         return (
-            <View>
-                <Text>Type deck title</Text>
-                <TextInput
-                    style={{ height: 40 }}
-                    onChangeText={(text) => this.setState({ deckTitle: text })}
-                    defaultValue={this.state.deckTitle}
-                />
-                <TouchableOpacity
-                    onPress={this.submit}
-                    style={styles.submitBtn}>
-                    <Text style={styles.submitBtnText}>SUBMIT </Text>
-                </TouchableOpacity>
+            <View style={styles.container}>
+                <View style={{ flex: 5 }}>
+                    <Text style={{ marginTop: 10 }}>Type deck title</Text>
+                    <TextInput
+                        style={{ height: 40, marginTop: 10 }}
+                        onChangeText={(text) => this.setState({ deckTitle: text })}
+                        defaultValue={this.state.deckTitle}
+                    />
+                </View>
+                <View style={{ flex: 1 }}>
+                    <TouchableOpacity
+                        onPress={this.submit}
+                        style={styles.submitBtn}>
+                        <Text style={styles.submitBtnText}>SUBMIT </Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         )
     }
@@ -68,6 +72,11 @@ function mapDispatchToProps(dispatch) {
 export default connect(mapStateToProps, mapDispatchToProps)(AddDeck);
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        padding: 20,
+        justifyContent: 'space-between',
+    },
     input: {
         flex: 1,
         marginTop: 12,
@@ -80,18 +89,15 @@ const styles = StyleSheet.create({
         },
     },
     text: {
-        fontSize: 20
+        fontSize: 14
     },
     submitBtn: {
+        padding: 20,
+        margin: 5,
+        flex: 1,
         backgroundColor: purple,
-        padding: 10,
-        paddingLeft: 30,
-        paddingRight: 30,
-        height: 45,
-        borderRadius: 2,
-        alignSelf: 'flex-end',
-        justifyContent: 'center',
         alignItems: 'center',
+        justifyContent: 'center',
     },
     submitBtnText: {
         color: white,

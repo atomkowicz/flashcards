@@ -8,17 +8,20 @@ import { purple, gray, white } from '../utils/colors';
 class Deck extends Component {
 
     render() {
-        const { id, title, navigation, questions } = this.props;
+        const { navigation } = this.props;
+        const { id, title, questions } = this.props.item;
+        const buttonStyle = questions.length === 0
+            ? [styles.buttonInactive]
+            : styles.button
 
         return (
             <View style={styles.container}>
-                <View>
+                <View style={{ flex: 2 }}>
                     <View style={styles.deck}>
                         <Text style={styles.text}>{title && title.toUpperCase()} </Text>
                         <Text>{questions && questions.length} - Card(s)</Text>
                     </View>
                 </View>
-                <Text>{JSON.stringify(questions)}</Text>
 
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity
@@ -30,8 +33,8 @@ class Deck extends Component {
                     </TouchableOpacity>
                     <TouchableOpacity
                         disabled={!questions.length}
-                        style={[styles.button, !questions.length? styles.inactive: ""]}
-                        onPress={() => navigation.navigate('Quiz', { questions })} >
+                        style={buttonStyle}
+                        onPress={() => navigation.navigate('Quiz', { questions, id })} >
                         <Text style={styles.buttonText}>Start Quiz</Text>
                     </TouchableOpacity>
                 </View>
@@ -40,21 +43,26 @@ class Deck extends Component {
     }
 }
 
-mapStateToProps = (state, props) => ({
-    ...props.navigation.state.params,
-})
+mapStateToProps = (state, props) => {
+    const { id } = props.navigation.state.params;
+    return ({
+        item: state[id]
+    })
+}
 
 export default connect(mapStateToProps)(Deck);
 
 const styles = StyleSheet.create({
-    conainer: {
+    container: {
         flex: 1,
-        justifyContent: 'space-between'
     },
     deck: {
+        flex: 2,
         marginTop: 5,
         padding: 40,
-        backgroundColor: white,
+        backgroundColor: white, 
+        justifyContent: 'center',
+        alignItems: 'center',
         shadowColor: 'rgba(0, 0, 0, 0.24)',
         shadowOffset: {
             width: 0,
@@ -62,12 +70,11 @@ const styles = StyleSheet.create({
         },
     },
     text: {
-        fontSize: 20
+        fontSize: 30
     },
     buttonContainer: {
-        margin: 10,
         flex: 1,
-        flexDirection: 'row',
+        margin: 10,
     },
     button: {
         flex: 1,
@@ -78,7 +85,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    inactive: {
+    buttonInactive: {
+        flex: 1,
+        padding: 20,
+        margin: 5,
+        height: 50,
+        backgroundColor: purple,
+        alignItems: 'center',
+        justifyContent: 'center',
         opacity: 0.4
     },
     buttonText: {

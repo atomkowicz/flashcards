@@ -36,6 +36,7 @@ export function addCardToDeck(card, deckId, deck) {
                 card,
                 deckId
             }))
+           
     }
 }
 

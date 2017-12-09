@@ -21,10 +21,12 @@ class DeckList extends Component {
 
     renderItem = ({ item }) => {
         const { navigation } = this.props;
+        const { id } = item;
+
         return (
             <TouchableOpacity
                 style={{ height: 150 }}
-                onPress={() => navigation.navigate('Deck', { ...item })} >
+                onPress={() => navigation.navigate('Deck', { id })} >
                 <DeckListItem {...item} />
             </TouchableOpacity>
         )
@@ -56,7 +58,6 @@ class DeckList extends Component {
                     <Text style={{ padding: 20 }}> clear </Text>
                 </TouchableOpacity>
                 {decksList && <FlatList
-
                     data={decksList}
                     renderItem={this.renderItem}
                     keyExtractor={(item, index) => index}
