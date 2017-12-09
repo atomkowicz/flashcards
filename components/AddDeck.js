@@ -25,7 +25,7 @@ class AddDeck extends Component {
     }
 
     getRandomTitle() {
-        const titles = ["VB", "C#", "Ruby", "Javascript", "React", "Java", "Scala", "SQL"];
+        const titles = ["Javascript", "React", "Java", "C#", "Ruby"];
         min = Math.ceil(0);
         max = Math.floor(7);
         const r = Math.floor(Math.random() * (max - min + 1)) + min;
@@ -41,9 +41,9 @@ class AddDeck extends Component {
         return (
             <View style={styles.container}>
                 <View style={{ flex: 5 }}>
-                    <Text style={{ marginTop: 10 }}>Type deck title</Text>
+                    <Text style={styles.text}>Type deck title</Text>
                     <TextInput
-                        style={{ height: 40, marginTop: 10 }}
+                        style={styles.input}
                         onChangeText={(text) => this.setState({ deckTitle: text })}
                         defaultValue={this.state.deckTitle}
                     />
@@ -52,7 +52,7 @@ class AddDeck extends Component {
                     <TouchableOpacity
                         onPress={this.submit}
                         style={styles.submitBtn}>
-                        <Text style={styles.submitBtnText}>SUBMIT </Text>
+                        <Text style={styles.submitBtnText}>SUBMIT</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -78,18 +78,11 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     input: {
-        flex: 1,
-        marginTop: 12,
-        padding: 5,
-        backgroundColor: white,
-        shadowColor: 'rgba(0, 0, 0, 0.24)',
-        shadowOffset: {
-            width: 0,
-            height: 3
-        },
+        height: 40, 
+        marginTop: 10
     },
     text: {
-        fontSize: 14
+        marginTop: 10
     },
     submitBtn: {
         padding: 20,

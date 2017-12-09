@@ -16,7 +16,7 @@ class Deck extends Component {
 
         return (
             <View style={styles.container}>
-                <View style={{ flex: 2 }}>
+                <View style={styles.deckContainer}>
                     <View style={styles.deck}>
                         <Text style={styles.text}>{title && title.toUpperCase()} </Text>
                         <Text>{questions && questions.length} - Card(s)</Text>
@@ -55,6 +55,9 @@ export default connect(mapStateToProps)(Deck);
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+    },
+    deckContainer: {
+        flex: 2,
     },
     deck: {
         flex: 2,

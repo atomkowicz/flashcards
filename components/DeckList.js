@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
-import { View, Text, FlatList, StyleSheet, ActivityIndicator, TouchableOpacity, AsyncStorage } from 'react-native';
+import {
+    View, Text,
+    FlatList, StyleSheet,
+    ActivityIndicator,
+    TouchableOpacity,
+    AsyncStorage
+} from 'react-native';
 import { fetchDecks } from '../utils/api';
 import DeckListItem from './DeckListItem';
 import Quiz from './Quiz';
@@ -55,7 +61,7 @@ class DeckList extends Component {
         return (
             <View>
                 <TouchableOpacity onPress={this.clearDecks} >
-                    <Text style={{ padding: 20 }}> clear </Text>
+                    <Text style={styles.text}> clear local storage </Text>
                 </TouchableOpacity>
                 {decksList && <FlatList
                     data={decksList}
@@ -86,4 +92,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    text: {
+        padding: 20
+    }
 });

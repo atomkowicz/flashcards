@@ -33,16 +33,14 @@ class Quiz extends Component {
                     ? prevState.questionNum + 1
                     : prevState.questionNum;
 
-            return (
-                {
-                    score: prevState.score + score,
-                    questionNum: questionNum,
-                    question: questions[questionNum].question,
-                    answer: questions[questionNum].answer,
-                    showAnswer: false,
-                    quizEnds: prevState.questionNum === questions.length - 1
-                }
-            )
+            return ({
+                score: prevState.score + score,
+                questionNum: questionNum,
+                question: questions[questionNum].question,
+                answer: questions[questionNum].answer,
+                showAnswer: false,
+                quizEnds: prevState.questionNum === questions.length - 1
+            })
         })
 
         clearLocalNotification()

@@ -8,6 +8,7 @@ import {
 function decks(state = {}, action) {
 
     const { decks, deckTitle, deckId, card } = action;
+
     switch (action.type) {
         case GET_DECKS:
             return {
@@ -24,7 +25,6 @@ function decks(state = {}, action) {
             };
         case ADD_CARD_TO_DECK:
             const { questions } = state[deckId];
-
             return {
                 ...state, [deckId]: {
                     ...state[deckId], ["questions"]:

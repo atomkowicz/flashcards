@@ -19,9 +19,9 @@ export default class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <View style={{ flex: 1 }}>
+        <View style={styles.container}>
           <View style={{ height: Constants.statusBarHeight }}>
-            <StatusBar barStyle="light-content" style={{ marginTop: 30 }} />
+            <StatusBar barStyle="light-content" style={styles.statusBar} />
           </View>
           <MainNavigator />
         </View>
@@ -71,7 +71,8 @@ const MainNavigator = StackNavigator({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
+  statusBar: {
+    marginTop: 30
+  }
 });
