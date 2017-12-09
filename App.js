@@ -10,8 +10,12 @@ import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import { Constants } from 'expo';
 import { Provider } from 'react-redux';
 import store from './store';
+import { setLocalNotification } from './utils/helpers';
 
 export default class App extends Component {
+  componentDidMount() {
+    setLocalNotification();
+  }
   render() {
     return (
       <Provider store={store}>

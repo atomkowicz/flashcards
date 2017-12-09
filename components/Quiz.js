@@ -3,6 +3,11 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import AddCard from './AddCard';
 import { connect } from 'react-redux'
 import { purple, gray, white } from '../utils/colors';
+import {
+    getDailyReminderValue,
+    clearLocalNotification,
+    setLocalNotification
+} from '../utils/helpers'
 
 
 class Quiz extends Component {
@@ -39,6 +44,9 @@ class Quiz extends Component {
                 }
             )
         })
+
+        clearLocalNotification()
+            .then(setLocalNotification)
 
     }
 
@@ -95,7 +103,7 @@ class Quiz extends Component {
                     </View>}
 
                 {quizEnds &&
-                    <View style={{ flex: 1}}>
+                    <View style={{ flex: 1 }}>
                         <View style={{ flex: 2, justifyContent: 'center', alignItems: 'center' }}>
                             <Text style={styles.text}>
                                 Your score: {this.state.score} / {questions.length} - {scorePerc}%</Text>
