@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { purple, gray, white } from '../utils/colors';
+import { listItem as styles } from '../utils/styles';
 
 class DeckListItem extends Component {
     render() {
@@ -18,19 +18,3 @@ class DeckListItem extends Component {
 }
 
 export default DeckListItem;
-
-const styles = StyleSheet.create({
-    DeckListItem: {
-        marginTop: 5,
-        padding: 40,
-        backgroundColor: white,
-        shadowColor: 'rgba(0, 0, 0, 0.24)',
-        shadowOffset: {
-            width: 0,
-            height: 3
-        },
-    },
-    text: {
-        fontSize: 20
-    }
-})

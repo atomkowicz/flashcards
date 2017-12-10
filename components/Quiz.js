@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import AddCard from './AddCard';
 import { connect } from 'react-redux'
-import { purple, gray, white } from '../utils/colors';
+import { purple } from '../utils/colors';
+import { styles } from '../utils/styles';
+import FlipCard from 'react-native-flip-card'
 import {
     getDailyReminderValue,
     clearLocalNotification,
@@ -74,18 +76,41 @@ class Quiz extends Component {
             <View style={{ flex: 1 }}>
                 {!quizEnds &&
                     <View style={{ flex: 2, justifyContent: 'center', alignItems: 'center' }}>
-                        <Text style={styles.text}>
-                            {this.state.question}
+
+                        <FlipCard
+                            style={styles.cardContainer}
+                            perspective={1000}
+                            flipHorizontal={true}
+                            flipVertical={false}
+                            flip={false}>
+                            {/* Face Side */}
+                            <View style={styles.card}>
+                                <Text>
+                                    Question:
+                                </Text>
+                                <Text style={styles.text}>
+                                    {this.state.question}
+                                </Text>
+                                <Text style={{ fontSize: 14, marginTop: 20 }}>
+                                    Tap card to see the answer
+                                </Text>
+                            </View>
+                            {/* Back Side */}
+                            <View style={styles.card}>
+                                <Text>
+                                    Answer:
+                                </Text>
+                                <Text style={{ fontSize: 20, marginTop: 20, color: purple }}>
+                                    {this.state.answer}
+                                </Text>
+                            </View>
+                        </FlipCard>
+
+                        <Text>
+                            {questions.length - questionNum - 1} question(s) left
                         </Text>
-                        <Text style={{ fontSize: 14, marginTop: 20, color: purple }}>
-                            {questions.length - questionNum - 1} question(s) left</Text>
-                        <TouchableOpacity
-                            onPress={() => { this.showAnswer() }} >
-                            <Text style={{ fontSize: 20, marginTop: 20, color: purple }}>
-                                {this.state.showAnswer ? this.state.answer : "See the answer"}
-                            </Text>
-                        </TouchableOpacity>
                     </View>}
+
                 {!quizEnds &&
                     <View style={styles.buttonContainer}>
                         <TouchableOpacity
@@ -109,7 +134,7 @@ class Quiz extends Component {
                         <View style={styles.buttonContainer}>
                             <TouchableOpacity
                                 style={styles.button}
-                                onPress={() => navigation.navigate('Deck', { id })}>
+                                onPress={() => this.props.navigation.goBack()}>
                                 <Text style={styles.buttonText}>Go back to deck</Text>
                             </TouchableOpacity>
                             <TouchableOpacity
@@ -129,42 +154,3 @@ mapStateToProps = (state, props) => ({
 })
 
 export default connect(mapStateToProps)(Quiz);
-
-const styles = StyleSheet.create({
-    conainer: {
-        flex: 1,
-        justifyContent: 'space-between'
-    },
-    deck: {
-        flex: 1,
-        marginTop: 5,
-        padding: 40,
-        backgroundColor: white,
-        shadowColor: 'rgba(0, 0, 0, 0.24)',
-        shadowOffset: {
-            width: 0,
-            height: 3
-        },
-    },
-    text: {
-        fontSize: 25,
-        marginTop: 20,
-    },
-    buttonContainer: {
-        margin: 10,
-        flex: 1,
-    },
-    button: {
-        flex: 1,
-        padding: 20,
-        margin: 5,
-        height: 50,
-        backgroundColor: purple,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    buttonText: {
-        color: white
-    }
-
-})

@@ -2,17 +2,16 @@ import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import AddCard from './AddCard';
 import { connect } from 'react-redux'
-import { purple, gray, white } from '../utils/colors';
-
+import { styles } from '../utils/styles';
 
 class Deck extends Component {
 
     render() {
-        const { navigation } = this.props;
-        const { id, title, questions } = this.props.item;
-        const buttonStyle = questions.length === 0
-            ? [styles.buttonInactive]
-            : styles.button
+        const { item, navigation } = this.props;
+        const questions = item ? item.questions : [];
+        const title = item ? item.title : "";
+        const id = item ? item.id : "";
+        const canStartQuiz = !!questions;
 
         return (
             <View style={styles.container}>
@@ -32,8 +31,8 @@ class Deck extends Component {
                         </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        disabled={!questions.length}
-                        style={buttonStyle}
+                        disabled={!canStartQuiz}
+                        style={canStartQuiz ? [styles.buttonInactive] : styles.button}
                         onPress={() => navigation.navigate('Quiz', { questions, id })} >
                         <Text style={styles.buttonText}>Start Quiz</Text>
                     </TouchableOpacity>
@@ -51,55 +50,3 @@ mapStateToProps = (state, props) => {
 }
 
 export default connect(mapStateToProps)(Deck);
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-    deckContainer: {
-        flex: 2,
-    },
-    deck: {
-        flex: 2,
-        marginTop: 5,
-        padding: 40,
-        backgroundColor: white, 
-        justifyContent: 'center',
-        alignItems: 'center',
-        shadowColor: 'rgba(0, 0, 0, 0.24)',
-        shadowOffset: {
-            width: 0,
-            height: 3
-        },
-    },
-    text: {
-        fontSize: 30
-    },
-    buttonContainer: {
-        flex: 1,
-        margin: 10,
-    },
-    button: {
-        flex: 1,
-        padding: 20,
-        margin: 5,
-        height: 50,
-        backgroundColor: purple,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    buttonInactive: {
-        flex: 1,
-        padding: 20,
-        margin: 5,
-        height: 50,
-        backgroundColor: purple,
-        alignItems: 'center',
-        justifyContent: 'center',
-        opacity: 0.4
-    },
-    buttonText: {
-        color: white
-    }
-
-})

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import { addCardToDeck } from '../actions';
-import { purple, gray, white } from '../utils/colors';
+import { formStyles as styles } from '../utils/styles';
 
 class AddCard extends Component {
     state = {
@@ -12,18 +12,25 @@ class AddCard extends Component {
 
     submit = () => {
         const card = this.state;
+        const { question, answer } = this.state;
         const { id, deck, deck: { questions, title }, navigation, addCardToDeck } = this.props;
 
-        const updatedDeck = {
-            [title]: {
-                ...deck,
-                ["questions"]: [...questions, card]
+        if (!question || !answer) {
+            Alert.alert(
+                'Form validation',
+                'Question and answer cannot be empty'
+            )
+        } else {
+            const updatedDeck = {
+                [title]: {
+                    ...deck,
+                    ["questions"]: [...questions, card]
+                }
             }
+
+            addCardToDeck(card, id, updatedDeck, navigation);
+            navigation.goBack()
         }
-
-        addCardToDeck(card, id, updatedDeck, navigation);
-        navigation.navigate('Deck', { id })
-
     }
     render() {
         return (
@@ -62,39 +69,5 @@ mapStateToProps = (state, props) => {
         deck: state[id]
     }
 }
-mapDispatchToProps = (dispatch) => {
-    return {
-        addCardToDeck: (card, deckId, deck) => dispatch(addCardToDeck(card, deckId, deck))
-    }
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddCard);
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 20
-    },
-    textInput: {
-        height: 40,
-        marginTop: 10,
-        fontSize: 14,
-    },
-    label: {
-        padding: 10,
-        fontSize: 14,
-        marginTop: 10,
-    },
-    submitBtn: {
-        flex: 1,
-        padding: 20,
-        margin: 5,
-        height: 50,
-        backgroundColor: purple,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    buttonText: {
-        color: white
-    }
-})
+export default connect(mapStateToProps, { addCardToDeck })(AddCard);

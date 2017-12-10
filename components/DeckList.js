@@ -10,7 +10,7 @@ import { fetchDecks } from '../utils/api';
 import DeckListItem from './DeckListItem';
 import Quiz from './Quiz';
 import Deck from './Deck';
-import { purple, gray, white } from '../utils/colors';
+import { listStyles as styles } from '../utils/styles';
 import { connect } from 'react-redux';
 import { getDecks } from '../actions';
 import { DECKS_STORAGE_KEY } from '../utils/api';
@@ -73,26 +73,6 @@ class DeckList extends Component {
     }
 }
 
-function mapStateToProps(state) {
-    return {
-        decks: state
-    }
-}
+const mapStateToProps = (decks) => ({ decks });
 
-function mapDispatchToProps(dispatch) {
-    return {
-        getDecks: () => dispatch(getDecks())
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(DeckList);
-
-const styles = StyleSheet.create({
-    container: {
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    text: {
-        padding: 20
-    }
-});
+export default connect(mapStateToProps, { getDecks })(DeckList);

@@ -13,3 +13,9 @@ This project was bootstrapped with [Create React Native App](https://github.com/
 ## Local storage
 
 This project uses local storage to keep user data
+
+## Licensing
+
+This project is under MIT licence
+
+##  External libraries
