@@ -9,13 +9,13 @@ This project was bootstrapped with [Create React Native App](https://github.com/
 
 ## Instalation
 
-* install all project dependencies with `yarn install`
-* start the development server with `yarn start`
+* install all project dependencies with `yarn install`.
+* start the development server with `yarn start`.
 
 ## Local storage
 
-This project uses local storage to keep user data
+This project uses local storage to keep user data.
 
 ## Licensing
 
-This project is under MIT licence
+This project is under MIT licence.
